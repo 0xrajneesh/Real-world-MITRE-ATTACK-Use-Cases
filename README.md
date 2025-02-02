@@ -6,7 +6,7 @@
 
 -  [**MITRE-ATTACK for Threat Hunter**](#mitre-attack-for-threat-hunter)  
 
--  [**MITRE-ATTACK for CTI Team**](#how-cyber-threat-intelligence-cti-teams-use-mitre-attck-in-real-world-scenarios)  
+-  [**MITRE-ATTACK for CTI Team**](#mitre-attck-for-cti-team)  
 
 -  [**MITRE-ATTACK for CISO and Risk Management**](#how-cisos--risk-management-use-mitre-attck-in-real-world-scenarios)  
 
