@@ -2,7 +2,7 @@
 
 # **Table of Contents**  
 
-- [**MITRE-ATTACK for SOC Team**](#how-soc-teams-use-mitre-attck-in-real-world-scenarios)  
+- [**MITRE-ATTACK for SOC Team**](#Real-world-MITRE-ATTACK-Use-Cases/blob/main/README.md#mitre-attack-for-soc-team)  
 
 -  [**MITRE-ATTACK for Threat Hunter**](#how-threat-hunters-use-mitre-attck-in-real-world-scenarios)  
 
