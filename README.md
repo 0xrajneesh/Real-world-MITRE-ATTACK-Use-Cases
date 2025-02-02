@@ -8,7 +8,7 @@
 
 -  [**MITRE-ATTACK for CTI Team**](#mitre-attck-for-cti-team)  
 
--  [**MITRE-ATTACK for CISO and Risk Management**](#how-cisos--risk-management-use-mitre-attck-in-real-world-scenarios)  
+-  [**MITRE-ATTACK for CISO and Risk Management**](#mitre-attck-for-ciso-and-risk-management)  
 
 -  [**Conclusion**](#conclusion)  
 
