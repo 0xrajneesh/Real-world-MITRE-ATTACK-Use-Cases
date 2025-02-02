@@ -1,6 +1,6 @@
 # Real-world-MITRE-ATTACK-Use-Cases
 
-
+## MITRE-ATTACK for SOC Team
 
 ### 🔶 1️⃣ Automated IOC Enrichment in SIEM  
 SOC teams automate the ingestion of **Indicators of Compromise (IOCs)** (IP addresses, file hashes, domains) to enrich security alerts and improve threat detection.
@@ -107,5 +107,294 @@ SOC teams **identify and contain ransomware attacks before they spread across th
 
 ---
 
-## 📌 Conclusion  
-SOC Analysts use **MITRE ATT&CK** to improve **threat intelligence, real-time detection, blocking malicious activities, and automating incident response** across **SIEM, EDR, and SOAR platforms**. These real-world applications help security teams **stay ahead of adversaries** and reduce response times.
+
+## MITRE-ATTACK for Threat Hunter
+Threat Hunters use **MITRE ATT&CK** to proactively **search for hidden threats**, investigate suspicious activity, and improve an organization's security posture by **hunting for adversaries** who evade traditional detection tools. Below are key activities they perform in real-world environments, along with practical examples and tools.
+
+---
+
+### 🔶 1️⃣ Hypothesis-Driven Threat Hunting  
+Threat Hunters **formulate hypotheses** based on adversary behaviors mapped to **MITRE ATT&CK techniques** and proactively search for signs of compromise.
+
+#### ✅ Examples & Use Cases  
+1️⃣ **Hunting for PowerShell-Based Lateral Movement** – Hunters develop a hypothesis: "Are attackers using PowerShell for lateral movement?"  
+- **Splunk:** Query logs for `powershell.exe -encodedcommand` executions across multiple hosts.  
+- **Elastic SIEM:** Detects remote PowerShell execution originating from unauthorized users.  
+- **Velociraptor:** Uses endpoint queries to detect PowerShell remoting activity.  
+
+2️⃣ **Detecting Credential Dumping Attempts** – Hunters investigate whether adversaries are extracting credentials from LSASS.  
+- **CrowdStrike Falcon:** Monitors memory access patterns for LSASS-related dumps.  
+- **Microsoft Defender ATP:** Uses behavioral AI to detect `mimikatz` activity.  
+- **Osquery:** Queries live endpoints for unauthorized memory access attempts.  
+
+3️⃣ **Identifying Persistence Mechanisms Used by Attackers** – Hunters check for unauthorized scheduled tasks or registry modifications.  
+- **Splunk:** Analyzes Windows event logs for newly created scheduled tasks.  
+- **Wazuh:** Detects suspicious registry modifications related to persistence techniques.  
+- **Elastic SIEM:** Flags changes in auto-start application entries that may indicate persistence.  
+
+---
+
+### 🔶 2️⃣ Behavior-Based Threat Hunting  
+Threat Hunters **focus on behavior analysis** instead of relying on IOCs, helping detect previously unknown threats.
+
+#### ✅ Examples & Use Cases  
+1️⃣ **Tracking Living-Off-The-Land (LOLBins) Attacks** – Hunters search for adversaries abusing built-in Windows utilities.  
+- **CrowdStrike Falcon:** Flags suspicious execution of `rundll32.exe`, `wmic.exe`, and `mshta.exe`.  
+- **Elastic SIEM:** Detects execution of uncommon built-in tools within an enterprise.  
+- **Splunk:** Correlates process execution logs to find LOLBins abuse.  
+
+2️⃣ **Uncovering Fileless Malware Execution** – Hunters investigate adversaries executing payloads directly in memory.  
+- **Microsoft Defender ATP:** Detects script-based malware using AMSI telemetry.  
+- **Velociraptor:** Monitors process injection techniques used by adversaries.  
+- **Splunk:** Searches for uncommon parent-child process relationships (e.g., `winword.exe` launching `powershell.exe`).  
+
+3️⃣ **Detecting Adversary Tactics Using ML-Based Anomalies** – Hunters use behavioral analytics to find advanced threats.  
+- **Elastic SIEM:** Uses anomaly detection to identify unusual system behavior.  
+- **Splunk UBA:** Detects rare user activity patterns indicating account compromise.  
+- **Osquery:** Analyzes running processes to find rare or suspicious execution patterns.  
+
+---
+
+### 🔶 3️⃣ Investigating Adversary Command-and-Control (C2) Traffic  
+Threat Hunters **trace adversary communication channels** to uncover persistent attackers within a network.
+
+#### ✅ Examples & Use Cases  
+1️⃣ **Detecting C2 Beaconing via DNS Tunneling** – Hunters investigate abnormal DNS query patterns.  
+- **Splunk:** Detects excessive DNS requests to newly registered domains.  
+- **Suricata IDS:** Identifies DNS tunneling behavior by analyzing domain entropy.  
+- **CrowdStrike Falcon:** Flags persistent DNS resolution attempts from compromised hosts.  
+
+2️⃣ **Identifying Encrypted C2 Traffic Over HTTPS (T1071.001)** – Hunters analyze TLS connections for anomalies.  
+- **Zeek (Bro IDS):** Detects long-duration TLS sessions with no significant data transfer.  
+- **Splunk:** Identifies repeated connections to rare domains over HTTPS.  
+- **Velociraptor:** Monitors user-agent strings in outbound HTTP requests for inconsistencies.  
+
+3️⃣ **Investigating Suspicious Outbound Traffic Spikes** – Hunters look for unauthorized data exfiltration attempts.  
+- **Microsoft Sentinel:** Uses anomaly detection for unusual outbound data volume.  
+- **Elastic SIEM:** Flags rare outbound traffic from sensitive workstations.  
+- **Suricata IDS:** Identifies high-volume outbound transfers to unknown destinations.  
+
+---
+
+### 🔶 4️⃣ Hunting for Privilege Escalation Attempts  
+Threat Hunters **search for indicators that attackers are trying to gain higher-level access** on compromised systems.
+
+#### ✅ Examples & Use Cases  
+1️⃣ **Detecting UAC Bypass Techniques (T1548)** – Hunters look for processes executing with elevated privileges.  
+- **Splunk:** Searches for processes running with `Consent.exe` in command lines.  
+- **Microsoft Defender ATP:** Identifies users bypassing User Account Control.  
+- **Osquery:** Queries system privileges of running processes to detect privilege escalation.  
+
+2️⃣ **Spotting Pass-the-Hash (PtH) or Pass-the-Ticket (PtT) Activity** – Hunters analyze authentication patterns.  
+- **CrowdStrike Falcon:** Detects NTLM hash reuse across different hosts.  
+- **Splunk:** Correlates event logs to find repeated authentications without password changes.  
+- **Microsoft Sentinel:** Uses analytics to detect Kerberos ticket anomalies.  
+
+3️⃣ **Uncovering Unauthorized Administrator Privilege Assignments** – Hunters track privilege elevation activities.  
+- **Elastic SIEM:** Detects modifications to domain admin groups.  
+- **Velociraptor:** Monitors privilege changes on Windows endpoints.  
+- **Wazuh:** Generates alerts when a non-admin account suddenly gains administrative rights.  
+
+---
+
+### 🔶 5️⃣ Investigating Data Exfiltration & Lateral Movement  
+Threat Hunters analyze **potential data theft and attacker movement inside a compromised environment**.
+
+#### ✅ Examples & Use Cases  
+1️⃣ **Detecting Lateral Movement via Remote Desktop Protocol (RDP) (T1021.001)** – Hunters search for unauthorized remote sessions.  
+- **Splunk:** Correlates RDP session logs with login failures.  
+- **Elastic SIEM:** Detects high-volume RDP connections from a single workstation.  
+- **CrowdStrike Falcon:** Flags anomalous RDP session activity.  
+
+2️⃣ **Tracking Data Exfiltration Over Cloud Storage** – Hunters monitor unauthorized file uploads.  
+- **Microsoft Sentinel:** Detects unusual OneDrive or Google Drive uploads.  
+- **Splunk:** Correlates upload activity with file access logs.  
+- **Zeek IDS:** Identifies outbound HTTP POST requests containing large payloads.  
+
+3️⃣ **Investigating SMB or Admin$ Share Access for Lateral Movement (T1077)** – Hunters look for unauthorized file share access.  
+- **Suricata IDS:** Flags SMB authentication attempts from unknown hosts.  
+- **Splunk:** Identifies repeated connections to admin shares across multiple machines.  
+- **Velociraptor:** Monitors `net use` commands in system logs.  
+
+---
+
+## 🚨 How Cyber Threat Intelligence (CTI) Teams Use MITRE ATT&CK in Real-World Scenarios 🚨  
+Cyber Threat Intelligence (CTI) teams **leverage MITRE ATT&CK** to analyze adversary tactics, techniques, and procedures (TTPs), track threat actors, and enrich security detections. Below are key activities they perform in real-world environments, along with practical examples and tools.
+
+---
+
+### 🔶 1️⃣ Threat Actor Profiling & Intelligence Mapping  
+CTI teams **track adversary groups and map their techniques** to the MITRE ATT&CK framework to anticipate future attacks.
+
+#### ✅ Examples & Use Cases  
+1️⃣ **Mapping APT Groups to ATT&CK Techniques** – CTI teams track and analyze nation-state and cybercriminal groups.  
+- **MISP:** Maps attack techniques of APT29, APT41, and FIN7 to ATT&CK TTPs.  
+- **OpenCTI:** Correlates historical attack data with MITRE ATT&CK threat groups.  
+- **MITRE ATT&CK Navigator:** Visualizes attack paths and techniques used by different adversaries.  
+
+2️⃣ **Analyzing TTPs of Recent Cyber Attacks** – CTI teams extract attack techniques from threat reports and enrich them with ATT&CK data.  
+- **ThreatFox:** Links indicators of compromise (IOCs) with ATT&CK techniques.  
+- **TheHive:** Classifies incidents based on observed attacker TTPs.  
+- **MISP:** Enriches threat intelligence with structured ATT&CK-based tagging.  
+
+3️⃣ **Tracking Malware Families Linked to ATT&CK Techniques** – CTI teams analyze malware behavior and map it to known TTPs.  
+- **YARA Rules:** Identifies malware samples associated with ATT&CK techniques.  
+- **Intezer Analyze:** Maps code reuse from malware families to known threat actors.  
+- **Any.Run Sandbox:** Detects process execution techniques used by malware.  
+
+---
+
+### 🔶 2️⃣ Enriching SIEM & SOC Alerts with Threat Intelligence  
+CTI teams **provide contextual intelligence** to SOC teams by enriching security alerts with adversary TTPs.
+
+#### ✅ Examples & Use Cases  
+1️⃣ **Adding MITRE ATT&CK Context to SIEM Alerts** – CTI teams map alerts to ATT&CK techniques for better threat understanding.  
+- **Splunk Enterprise Security:** Correlates security alerts with ATT&CK metadata.  
+- **Microsoft Sentinel:** Uses MITRE ATT&CK-based analytics to enrich detection rules.  
+- **Elastic SIEM:** Matches alerts against known TTPs for improved triage.  
+
+2️⃣ **Automating Threat Intelligence Lookups in SIEM** – CTI teams integrate external feeds into SIEM for automated threat detection.  
+- **Wazuh:** Ingests threat feeds and maps detections to ATT&CK.  
+- **MISP:** Pushes real-time threat intelligence into SIEM platforms.  
+- **TheHive:** Enriches incidents with external threat intelligence sources.  
+
+3️⃣ **Cross-Matching Security Events with External Threat Feeds** – CTI teams correlate logs with known attack techniques.  
+- **CrowdStrike Falcon:** Flags host activity that matches ATT&CK-mapped threats.  
+- **Cisco Talos:** Provides IOC threat intelligence enriched with ATT&CK mappings.  
+- **AlienVault OTX:** Integrates threat feeds into SIEM for real-time correlation.  
+
+---
+
+### 🔶 3️⃣ Investigating Command-and-Control (C2) and Phishing Campaigns  
+CTI teams **track C2 infrastructure, phishing domains, and adversary communication methods** to preempt attacks.
+
+#### ✅ Examples & Use Cases  
+1️⃣ **Analyzing C2 Infrastructure Linked to Threat Actors** – CTI teams track domain names and IPs associated with attack campaigns.  
+- **PassiveTotal:** Identifies new C2 infrastructure linked to APTs.  
+- **Shodan:** Searches for active C2 servers linked to threat actor operations.  
+- **VirusTotal:** Correlates suspicious domains with previous malware campaigns.  
+
+2️⃣ **Tracking Phishing Kits & Malicious Domains** – CTI teams analyze phishing infrastructure to predict future threats.  
+- **PhishTank:** Identifies malicious phishing domains and URL patterns.  
+- **Urlscan.io:** Investigates suspicious domains and extracts IOCs.  
+- **Microsoft Defender ATP:** Tracks malicious email attachments and embedded links.  
+
+3️⃣ **Investigating Threat Actor Communication Channels (T1071)** – CTI teams monitor adversary traffic to detect emerging attack patterns.  
+- **Zeek IDS:** Captures and analyzes HTTP/S C2 communication.  
+- **Splunk:** Flags suspicious outbound requests to rare domains.  
+- **Suricata IDS:** Detects DNS tunneling and encrypted C2 channels.  
+
+---
+
+## MITRE ATT&CK for CTI Team
+Cyber Threat Intelligence (CTI) teams **leverage MITRE ATT&CK** to analyze adversary tactics, techniques, and procedures (TTPs), track threat actors, and enrich security detections. Below are key activities they perform in real-world environments, along with practical examples and tools.
+
+---
+
+### 🔶 1️⃣ Threat Actor Profiling & Intelligence Mapping  
+CTI teams **track adversary groups and map their techniques** to the MITRE ATT&CK framework to anticipate future attacks.
+
+#### ✅ Examples & Use Cases  
+1️⃣ **Mapping APT Groups to ATT&CK Techniques** – CTI teams track and analyze nation-state and cybercriminal groups.  
+- **MISP:** Maps attack techniques of APT29, APT41, and FIN7 to ATT&CK TTPs.  
+- **OpenCTI:** Correlates historical attack data with MITRE ATT&CK threat groups.  
+- **MITRE ATT&CK Navigator:** Visualizes attack paths and techniques used by different adversaries.  
+
+2️⃣ **Analyzing TTPs of Recent Cyber Attacks** – CTI teams extract attack techniques from threat reports and enrich them with ATT&CK data.  
+- **ThreatFox:** Links indicators of compromise (IOCs) with ATT&CK techniques.  
+- **TheHive:** Classifies incidents based on observed attacker TTPs.  
+- **MISP:** Enriches threat intelligence with structured ATT&CK-based tagging.  
+
+3️⃣ **Tracking Malware Families Linked to ATT&CK Techniques** – CTI teams analyze malware behavior and map it to known TTPs.  
+- **YARA Rules:** Identifies malware samples associated with ATT&CK techniques.  
+- **Intezer Analyze:** Maps code reuse from malware families to known threat actors.  
+- **Any.Run Sandbox:** Detects process execution techniques used by malware.  
+
+---
+
+### 🔶 2️⃣ Enriching SIEM & SOC Alerts with Threat Intelligence  
+CTI teams **provide contextual intelligence** to SOC teams by enriching security alerts with adversary TTPs.
+
+#### ✅ Examples & Use Cases  
+1️⃣ **Adding MITRE ATT&CK Context to SIEM Alerts** – CTI teams map alerts to ATT&CK techniques for better threat understanding.  
+- **Splunk Enterprise Security:** Correlates security alerts with ATT&CK metadata.  
+- **Microsoft Sentinel:** Uses MITRE ATT&CK-based analytics to enrich detection rules.  
+- **Elastic SIEM:** Matches alerts against known TTPs for improved triage.  
+
+2️⃣ **Automating Threat Intelligence Lookups in SIEM** – CTI teams integrate external feeds into SIEM for automated threat detection.  
+- **Wazuh:** Ingests threat feeds and maps detections to ATT&CK.  
+- **MISP:** Pushes real-time threat intelligence into SIEM platforms.  
+- **TheHive:** Enriches incidents with external threat intelligence sources.  
+
+3️⃣ **Cross-Matching Security Events with External Threat Feeds** – CTI teams correlate logs with known attack techniques.  
+- **CrowdStrike Falcon:** Flags host activity that matches ATT&CK-mapped threats.  
+- **Cisco Talos:** Provides IOC threat intelligence enriched with ATT&CK mappings.  
+- **AlienVault OTX:** Integrates threat feeds into SIEM for real-time correlation.  
+
+---
+
+### 🔶 3️⃣ Investigating Command-and-Control (C2) and Phishing Campaigns  
+CTI teams **track C2 infrastructure, phishing domains, and adversary communication methods** to preempt attacks.
+
+#### ✅ Examples & Use Cases  
+1️⃣ **Analyzing C2 Infrastructure Linked to Threat Actors** – CTI teams track domain names and IPs associated with attack campaigns.  
+- **PassiveTotal:** Identifies new C2 infrastructure linked to APTs.  
+- **Shodan:** Searches for active C2 servers linked to threat actor operations.  
+- **VirusTotal:** Correlates suspicious domains with previous malware campaigns.  
+
+2️⃣ **Tracking Phishing Kits & Malicious Domains** – CTI teams analyze phishing infrastructure to predict future threats.  
+- **PhishTank:** Identifies malicious phishing domains and URL patterns.  
+- **Urlscan.io:** Investigates suspicious domains and extracts IOCs.  
+- **Microsoft Defender ATP:** Tracks malicious email attachments and embedded links.  
+
+3️⃣ **Investigating Threat Actor Communication Channels (T1071)** – CTI teams monitor adversary traffic to detect emerging attack patterns.  
+- **Zeek IDS:** Captures and analyzes HTTP/S C2 communication.  
+- **Splunk:** Flags suspicious outbound requests to rare domains.  
+- **Suricata IDS:** Detects DNS tunneling and encrypted C2 channels.  
+
+---
+
+### 🔶 4️⃣ Tracking Dark Web & Underground Marketplaces  
+CTI teams **monitor underground forums, leak sites, and dark web marketplaces** to gather intelligence on emerging threats.
+
+#### ✅ Examples & Use Cases  
+1️⃣ **Monitoring Data Breaches & Credential Leaks** – CTI teams track leaked credentials and sensitive data exposures.  
+- **Have I Been Pwned:** Identifies breached email addresses and passwords.  
+- **Intel471:** Provides threat actor insights from closed forums.  
+- **DarkTracer:** Monitors data dumps and ransomware leaks.  
+
+2️⃣ **Identifying Pre-Sale Exploit Listings & Zero-Day Discussions** – CTI teams track exploit sales in underground forums.  
+- **Recorded Future:** Tracks mentions of new vulnerabilities in criminal marketplaces.  
+- **Cybercrime Forum Monitoring:** Extracts intelligence on planned cyberattacks.  
+- **Flashpoint Intelligence:** Analyzes cybercriminal chatter on upcoming exploits.  
+
+3️⃣ **Detecting Ransomware Affiliate Activity in Underground Markets** – CTI teams track ransomware groups’ recruitment efforts.  
+- **Blockchain Analysis:** Traces ransomware payments on cryptocurrency ledgers.  
+- **Ransomware Tracker:** Identifies ongoing ransomware campaigns.  
+- **Threat Intelligence Platforms (TIPs):** Correlates ransomware incidents with attacker TTPs.  
+
+---
+
+### 🔶 5️⃣ Producing Intelligence Reports & Threat Assessments  
+CTI teams **deliver actionable threat intelligence reports** that help security leaders understand evolving threats.
+
+#### ✅ Examples & Use Cases  
+1️⃣ **Creating ATT&CK-Mapped Threat Intelligence Reports** – CTI teams generate reports linking attacks to ATT&CK techniques.  
+- **MITRE ATT&CK Navigator:** Visualizes adversary TTPs for easy reporting.  
+- **MISP:** Creates structured threat reports mapped to ATT&CK.  
+- **TheHive:** Stores, categorizes, and manages intelligence reports for SOC teams.  
+
+2️⃣ **Providing Risk-Based Threat Intelligence to CISOs** – CTI teams inform executives about current and emerging threats.  
+- **Splunk:** Generates dashboards that display TTP trends over time.  
+- **Elastic SIEM:** Maps security posture against observed attacker techniques.  
+- **Cyber Threat Intelligence Feeds:** Aggregates data to assess organizational risk.  
+
+3️⃣ **Helping Security Teams Prioritize Threat Mitigation Based on Intelligence** – CTI teams assist SOC, Threat Hunting, and Risk teams with targeted intelligence.  
+- **Threat Intelligence Platforms (TIPs):** Help teams prioritize critical threats.  
+- **ATT&CK-Based Threat Emulation:** Enables red teams to simulate real attack scenarios.  
+- **Threat Feeds in SOAR:** Automates response actions based on intelligence insights.  
+
+---
+
+
+
