@@ -4,7 +4,7 @@
 
 - [**MITRE-ATTACK for SOC Team**](#mitre-attack-for-soc-team)  
 
--  [**MITRE-ATTACK for Threat Hunter**](#how-threat-hunters-use-mitre-attck-in-real-world-scenarios)  
+-  [**MITRE-ATTACK for Threat Hunter**](#mitre-attack-for-threat-hunter)  
 
 -  [**MITRE-ATTACK for CTI Team**](#how-cyber-threat-intelligence-cti-teams-use-mitre-attck-in-real-world-scenarios)  
 
