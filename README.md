@@ -2,15 +2,15 @@
 
 # **Table of Contents**  
 
-1️⃣ [**MITRE-ATTACK for SOC Team**](#how-soc-teams-use-mitre-attck-in-real-world-scenarios)  
+- [**MITRE-ATTACK for SOC Team**](#how-soc-teams-use-mitre-attck-in-real-world-scenarios)  
 
-2️⃣ [**MITRE-ATTACK for Threat Hunter**](#how-threat-hunters-use-mitre-attck-in-real-world-scenarios)  
+-  [**MITRE-ATTACK for Threat Hunter**](#how-threat-hunters-use-mitre-attck-in-real-world-scenarios)  
 
-3️⃣ [**MITRE-ATTACK for CTI Team**](#how-cyber-threat-intelligence-cti-teams-use-mitre-attck-in-real-world-scenarios)  
+-  [**MITRE-ATTACK for CTI Team**](#how-cyber-threat-intelligence-cti-teams-use-mitre-attck-in-real-world-scenarios)  
 
-4️⃣ [**MITRE-ATTACK for CISO and Risk Management**](#how-cisos--risk-management-use-mitre-attck-in-real-world-scenarios)  
+-  [**MITRE-ATTACK for CISO and Risk Management**](#how-cisos--risk-management-use-mitre-attck-in-real-world-scenarios)  
 
-📌 [**Conclusion**](#conclusion)  
+-  [**Conclusion**](#conclusion)  
 
 
 ## MITRE-ATTACK for SOC Team
